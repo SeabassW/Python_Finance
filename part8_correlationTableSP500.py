@@ -8,7 +8,6 @@ import pandas as pd
 import pandas_datareader.data as web
 import pickle
 import requests
-import string
 
 style.use('ggplot')
 
@@ -20,7 +19,7 @@ def save_sp500_tickers():
 
 	for row in table.findAll('tr')[1:]:
 		ticker = row.findAll('td')[0].text
-		mapping = string.maketrans(".","-")
+		mapping = str.maketrans(".","-")
 		ticker = ticker.translate(mapping)
 		tickers.append(ticker)
 
@@ -29,7 +28,7 @@ def save_sp500_tickers():
 
 	return tickers
 
-save_sp500_tickers()
+#save_sp500_tickers()
 
 def get_data_from_yahoo(reload_sp500=False):
 	if reload_sp500:
@@ -60,7 +59,7 @@ def compile_data():
 
 	main_df = pd.DataFrame()
 
-	for count, ticker in enumerate(tickers[:25]):
+	for count, ticker in enumerate(tickers):
 		df = pd.read_csv('stock_dfs/{}.csv'.format(ticker))
 		df.set_index('Date', inplace=True)
 
@@ -114,6 +113,6 @@ def visualize_data():
 
 	plt.show()
 
-#visualize_data()
+visualize_data()
 
 
